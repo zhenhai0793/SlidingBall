@@ -21,7 +21,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Camera;
 import android.graphics.Matrix;
+import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Transformation;
@@ -31,6 +33,8 @@ import android.widget.SpinnerAdapter;
 
 
 public class FancyCoverFlow extends Gallery {
+
+    private String TAG = "FancyCoverFlow";
 
 
     public static final int ACTION_DISTANCE_AUTO = Integer.MAX_VALUE;
@@ -307,26 +311,37 @@ public class FancyCoverFlow extends Gallery {
             item.invalidate();
         }
 
+        Log.d(TAG, "==="+ Build.VERSION.SDK_INT+":"+Build.VERSION.CODENAME+"===");
+
         final int coverFlowWidth = this.getWidth();
         final int coverFlowCenter = coverFlowWidth / 2;
         final int childWidth = item.getWidth();
         final int childHeight = item.getHeight();
         final int childCenter = item.getLeft() + childWidth / 2;
 
+        Log.d(TAG, "coverFlowWidth:"+coverFlowWidth+", coverFlowCenter:"+coverFlowCenter
+                +", childWidth:"+childWidth+", childHeight:"+childHeight+", childCenter:"+childCenter);
+
         // Use coverflow width when its defined as automatic.
-        final int actionDistance = (this.actionDistance == ACTION_DISTANCE_AUTO) ? (int) ((coverFlowWidth + childWidth) / 2.0f) : this.actionDistance;
+//        final int actionDistance = (this.actionDistance == ACTION_DISTANCE_AUTO) ? (int) ((coverFlowWidth + childWidth) / 2.0f) : this.actionDistance;
+        final int actionDistance = (this.actionDistance == ACTION_DISTANCE_AUTO) ? (int) ((coverFlowWidth - childWidth) / 2.0f) : this.actionDistance;
 
         // Calculate the abstract amount for all effects.
         final float effectsAmount = Math.min(1.0f, Math.max(-1.0f, (1.0f / actionDistance) * (childCenter - coverFlowCenter)));
+
+        Log.d(TAG, "actionDistance:"+actionDistance+", effectsAmount:"+effectsAmount);
 
         // Clear previous transformations and set transformation type (matrix + alpha).
         t.clear();
         t.setTransformationType(Transformation.TYPE_BOTH);
 
+        Log.d(TAG, "unselectedAlpha:"+unselectedAlpha+", unselectedSaturation:"+unselectedSaturation+", maxRotation:"+maxRotation+", unselectedScale:"+unselectedScale);
+
         // Alpha
         if (this.unselectedAlpha != 1) {
             final float alphaAmount = (this.unselectedAlpha - 1) * Math.abs(effectsAmount) + 1;
             t.setAlpha(alphaAmount);
+            Log.d(TAG, "alpha:"+alphaAmount);
         }
 
         // Saturation
@@ -334,6 +349,7 @@ public class FancyCoverFlow extends Gallery {
             // Pass over saturation to the wrapper.
             final float saturationAmount = (this.unselectedSaturation - 1) * Math.abs(effectsAmount) + 1;
             item.setSaturation(saturationAmount);
+            Log.d(TAG, "saturation:"+saturationAmount);
         }
 
         final Matrix imageMatrix = t.getMatrix();
@@ -345,18 +361,25 @@ public class FancyCoverFlow extends Gallery {
             this.transformationCamera.rotateY(rotationAngle);
             this.transformationCamera.getMatrix(imageMatrix);
             this.transformationCamera.restore();
+            Log.d(TAG, "rotationAngleY:"+rotationAngle);
         }
 
         // Zoom.
         if (this.unselectedScale != 1) {
-            final float zoomAmount = (this.unselectedScale - 1) * Math.abs(effectsAmount) + 1;
+//            final float zoomAmount = (this.unselectedScale - 1) * Math.abs(effectsAmount) + 1;
+            // fzh
+            float diffScale = 1 - this.unselectedScale;
+            float zoomAmount = 1 + diffScale * (1 - Math.abs(effectsAmount));
             // Calculate the scale anchor (y anchor can be altered)
-            final float translateX = childWidth / 2.0f;
-            final float translateY = childHeight * this.scaleDownGravity;
+            final float translateX = zoomAmount * childWidth / 2.0f;
+            final float translateY = zoomAmount * childHeight * this.scaleDownGravity;
             imageMatrix.preTranslate(-translateX, -translateY);
             imageMatrix.postScale(zoomAmount, zoomAmount);
             imageMatrix.postTranslate(translateX, translateY);
+            Log.d(TAG, "zoomAmount:"+zoomAmount+", translateX:"+translateX+", translateY:"+translateY);
         }
+
+        Log.d(TAG, "===getChildStaticTransformation.End===");
 
         return true;
     }

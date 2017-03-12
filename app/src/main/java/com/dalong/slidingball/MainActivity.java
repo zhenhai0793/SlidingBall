@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import com.dalong.francyconverflow.FlowGallery;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -18,15 +19,32 @@ public class MainActivity extends Activity {
     private FlowGallery flowGallery;
     private MyFlowAdapter flowAdapter;
 
+    LinkedList<Integer> imageResIds = new LinkedList();
+
+    public void initImageResIds() {
+        imageResIds.add(R.drawable.image1);
+        imageResIds.add(R.drawable.image2);
+        imageResIds.add(R.drawable.image3);
+        imageResIds.add(R.drawable.image4);
+        imageResIds.add(R.drawable.image5);
+        imageResIds.add(R.drawable.image6);
+        imageResIds.add(R.drawable.image7);
+        imageResIds.add(R.drawable.image8);
+        imageResIds.add(R.drawable.image9);
+        imageResIds.add(R.drawable.image10);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initImageResIds();
         List<FlowItem> flowItems = new ArrayList<>();
         for (int i = 0; i < 99; i++) {
             FlowItem flowItem = new FlowItem();
             flowItem.setName("第" + (i + 1) + "天");
             flowItem.setSelected(false);
+            flowItem.setImageResId(imageResIds.get(i%10));
             flowItems.add(flowItem);
         }
         flowGallery = (FlowGallery) findViewById(R.id.fancy_cover_flow);

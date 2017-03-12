@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -34,12 +35,14 @@ public class MyFlowAdapter extends FlowAdapter {
             convertView.setLayoutParams(new FlowGallery.LayoutParams(width / 3, width / 2));//FlowGallery.LayoutParams.WRAP_CONTENT));
             holder = new ViewHolder();
             holder.textView = (TextView) convertView.findViewById(R.id.text_view);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.image_view);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final FlowItem item = getItem(position);
         holder.textView.setText(item.getName());
+        holder.imageView.setImageResource(item.getImageResId());
         return convertView;
     }
 
@@ -60,5 +63,6 @@ public class MyFlowAdapter extends FlowAdapter {
 
     static class ViewHolder {
         TextView textView;
+        ImageView imageView;
     }
 }

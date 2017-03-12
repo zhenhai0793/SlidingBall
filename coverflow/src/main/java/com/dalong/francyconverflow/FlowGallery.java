@@ -30,8 +30,6 @@ import android.view.animation.Transformation;
 import android.widget.Gallery;
 import android.widget.SpinnerAdapter;
 
-
-
 public class FlowGallery extends Gallery {
 
     private String TAG = "FlowGallery";
@@ -371,8 +369,10 @@ public class FlowGallery extends Gallery {
             float diffScale = 1 - this.unselectedScale;
             float zoomAmount = 1 + diffScale * (1 - Math.abs(effectsAmount));
             // Calculate the scale anchor (y anchor can be altered)
-            final float translateX = zoomAmount * childWidth / 2.0f;
-            final float translateY = zoomAmount * childHeight * this.scaleDownGravity;
+//            final float translateX = zoomAmount * childWidth / 2.0f;
+            final float translateX = childWidth / 2.0f;
+//            final float translateY = zoomAmount * childHeight * this.scaleDownGravity;
+            final float translateY = childHeight * this.scaleDownGravity;
             imageMatrix.preTranslate(-translateX, -translateY);
             imageMatrix.postScale(zoomAmount, zoomAmount);
             imageMatrix.postTranslate(translateX, translateY);

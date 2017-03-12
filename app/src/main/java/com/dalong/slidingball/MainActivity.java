@@ -64,6 +64,4 @@ public class MainActivity extends Activity {
 
         flowGallery.setSelection(selectPosition);
     }
-
-
 }

@@ -32,9 +32,9 @@ import android.widget.SpinnerAdapter;
 
 
 
-public class FancyCoverFlow extends Gallery {
+public class FlowGallery extends Gallery {
 
-    private String TAG = "FancyCoverFlow";
+    private String TAG = "FlowGallery";
 
 
     public static final int ACTION_DISTANCE_AUTO = Integer.MAX_VALUE;
@@ -94,18 +94,18 @@ public class FancyCoverFlow extends Gallery {
     // Constructors
     // =============================================================================
 
-    public FancyCoverFlow(Context context) {
+    public FlowGallery(Context context) {
         super(context);
         this.initialize();
     }
 
-    public FancyCoverFlow(Context context, AttributeSet attrs) {
+    public FlowGallery(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.initialize();
         this.applyXmlAttributes(attrs);
     }
 
-    public FancyCoverFlow(Context context, AttributeSet attrs, int defStyle) {
+    public FlowGallery(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.initialize();
         this.applyXmlAttributes(attrs);
@@ -117,14 +117,14 @@ public class FancyCoverFlow extends Gallery {
     }
 
     private void applyXmlAttributes(AttributeSet attrs) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FancyCoverFlow);
+        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FlowGallery);
 
-        this.actionDistance = a.getInteger(R.styleable.FancyCoverFlow_actionDistance, ACTION_DISTANCE_AUTO);
-        this.scaleDownGravity = a.getFloat(R.styleable.FancyCoverFlow_scaleDownGravity, 1.0f);
-        this.maxRotation = a.getInteger(R.styleable.FancyCoverFlow_maxRotation, 45);
-        this.unselectedAlpha = a.getFloat(R.styleable.FancyCoverFlow_unselectedAlpha, 0.3f);
-        this.unselectedSaturation = a.getFloat(R.styleable.FancyCoverFlow_unselectedSaturation, 0.0f);
-        this.unselectedScale = a.getFloat(R.styleable.FancyCoverFlow_unselectedScale, 0.75f);
+        this.actionDistance = a.getInteger(R.styleable.FlowGallery_actionDistance, ACTION_DISTANCE_AUTO);
+        this.scaleDownGravity = a.getFloat(R.styleable.FlowGallery_scaleDownGravity, 1.0f);
+        this.maxRotation = a.getInteger(R.styleable.FlowGallery_maxRotation, 45);
+        this.unselectedAlpha = a.getFloat(R.styleable.FlowGallery_unselectedAlpha, 0.3f);
+        this.unselectedSaturation = a.getFloat(R.styleable.FlowGallery_unselectedSaturation, 0.0f);
+        this.unselectedScale = a.getFloat(R.styleable.FlowGallery_unselectedScale, 0.75f);
     }
 
     // =============================================================================
@@ -143,7 +143,7 @@ public class FancyCoverFlow extends Gallery {
         this.reflectionRatio = reflectionRatio;
 
         if (this.getAdapter() != null) {
-            ((FancyCoverFlowAdapter) this.getAdapter()).notifyDataSetChanged();
+            ((FlowAdapter) this.getAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -155,7 +155,7 @@ public class FancyCoverFlow extends Gallery {
         this.reflectionGap = reflectionGap;
 
         if (this.getAdapter() != null) {
-            ((FancyCoverFlowAdapter) this.getAdapter()).notifyDataSetChanged();
+            ((FlowAdapter) this.getAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -167,21 +167,21 @@ public class FancyCoverFlow extends Gallery {
         this.reflectionEnabled = reflectionEnabled;
 
         if (this.getAdapter() != null) {
-            ((FancyCoverFlowAdapter) this.getAdapter()).notifyDataSetChanged();
+            ((FlowAdapter) this.getAdapter()).notifyDataSetChanged();
         }
     }
 
     /**
-     * Use this to provide a {@link FancyCoverFlowAdapter} to the coverflow. This
+     * Use this to provide a {@link FlowAdapter} to the coverflow. This
      * method will throw an {@link ClassCastException} if the passed adapter does not
-     * subclass {@link FancyCoverFlowAdapter}.
+     * subclass {@link FlowAdapter}.
      *
      * @param adapter
      */
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
-        if (!(adapter instanceof FancyCoverFlowAdapter)) {
-            throw new ClassCastException(FancyCoverFlow.class.getSimpleName() + " only works in conjunction with a " + FancyCoverFlowAdapter.class.getSimpleName());
+        if (!(adapter instanceof FlowAdapter)) {
+            throw new ClassCastException(FlowGallery.class.getSimpleName() + " only works in conjunction with a " + FlowAdapter.class.getSimpleName());
         }
 
         super.setAdapter(adapter);
@@ -303,8 +303,8 @@ public class FancyCoverFlow extends Gallery {
 
     @Override
     protected boolean getChildStaticTransformation(View child, Transformation t) {
-        // We can cast here because FancyCoverFlowAdapter only creates wrappers.
-        FancyCoverFlowItemWrapper item = (FancyCoverFlowItemWrapper) child;
+        // We can cast here because FlowAdapter only creates wrappers.
+        FlowItemWrapper item = (FlowItemWrapper) child;
 
         // Since Jelly Bean childs won't get invalidated automatically, needs to be added for the smooth coverflow animation
         if (android.os.Build.VERSION.SDK_INT >= 16) {

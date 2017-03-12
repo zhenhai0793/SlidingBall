@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 
-public abstract class FancyCoverFlowAdapter extends BaseAdapter {
+public abstract class FlowAdapter extends BaseAdapter {
 
     // =============================================================================
     // Supertype overrides
@@ -30,17 +30,17 @@ public abstract class FancyCoverFlowAdapter extends BaseAdapter {
 
     @Override
     public final View getView(int i, View reusableView, ViewGroup viewGroup) {
-        FancyCoverFlow coverFlow = (FancyCoverFlow) viewGroup;
+        FlowGallery coverFlow = (FlowGallery) viewGroup;
 
         View wrappedView = null;
-        FancyCoverFlowItemWrapper coverFlowItem;
+        FlowItemWrapper coverFlowItem;
 
         if (reusableView != null) {
-            coverFlowItem = (FancyCoverFlowItemWrapper) reusableView;
+            coverFlowItem = (FlowItemWrapper) reusableView;
             wrappedView = coverFlowItem.getChildAt(0);
             coverFlowItem.removeAllViews();
         } else {
-            coverFlowItem = new FancyCoverFlowItemWrapper(viewGroup.getContext());
+            coverFlowItem = new FlowItemWrapper(viewGroup.getContext());
         }
 
         wrappedView = this.getCoverFlowItem(i, wrappedView, viewGroup);

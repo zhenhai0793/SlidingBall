@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="FancyCoverFlow">
+    <declare-styleable name="FlowGallery">
         <attr name="unselectedAlpha" format="float" />
         <attr name="unselectedSaturation" format="float" />
         <attr name="unselectedScale" format="float" />

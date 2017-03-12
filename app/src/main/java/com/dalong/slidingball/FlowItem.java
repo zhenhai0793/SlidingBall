@@ -1,9 +1,6 @@
 package com.dalong.slidingball;
 
-/**
- * Created by zhouweilong on 15/12/14.
- */
-public class Item {
+public class FlowItem {
     private String name;
     private boolean isSelected;
 

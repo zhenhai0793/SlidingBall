@@ -1,61 +1,58 @@
 package com.dalong.slidingball;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
-import com.dalong.francyconverflow.FancyCoverFlow;
+import com.dalong.francyconverflow.FlowGallery;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
-    private String TAG = "FancyCoverFlow";
+    private String TAG = "FlowGallery";
 
-    private FancyCoverFlow mfancyCoverFlow;
-    private MyFancyCoverFlowAdapter mMyFancyCoverFlowAdapter;
+    private FlowGallery flowGallery;
+    private MyFlowAdapter flowAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
-        List<Item> items=new ArrayList<>();
-        for(int i=0;i<365;i++){
-            Item item=new Item();
-            item.setName((i+1)+"天");
-            item.setSelected(false);
-            items.add(item);
+        setContentView(R.layout.activity_main);
+        List<FlowItem> flowItems = new ArrayList<>();
+        for (int i = 0; i < 99; i++) {
+            FlowItem flowItem = new FlowItem();
+            flowItem.setName("第" + (i + 1) + "天");
+            flowItem.setSelected(false);
+            flowItems.add(flowItem);
         }
-        mfancyCoverFlow = (FancyCoverFlow) findViewById(R.id.fancyCoverFlow);
-        mMyFancyCoverFlowAdapter = new MyFancyCoverFlowAdapter(this, items);
-        mfancyCoverFlow.setAdapter(mMyFancyCoverFlowAdapter);
-        mMyFancyCoverFlowAdapter.notifyDataSetChanged();
+        flowGallery = (FlowGallery) findViewById(R.id.fancy_cover_flow);
+        flowAdapter = new MyFlowAdapter(this, flowItems);
+        flowGallery.setAdapter(flowAdapter);
+        flowAdapter.notifyDataSetChanged();
 
-        mfancyCoverFlow.setUnselectedAlpha(0.9f);
-        mfancyCoverFlow.setUnselectedSaturation(0.9f);
-        mfancyCoverFlow.setUnselectedScale(0.6f);
-        mfancyCoverFlow.setSpacing(0);
-        mfancyCoverFlow.setMaxRotation(0);
-        mfancyCoverFlow.setScaleDownGravity(0.5f);
-        mfancyCoverFlow.setActionDistance(FancyCoverFlow.ACTION_DISTANCE_AUTO);
+        flowGallery.setUnselectedAlpha(0.9f);
+        flowGallery.setUnselectedSaturation(0.9f);
+        flowGallery.setUnselectedScale(0.6f);
+        flowGallery.setSpacing(0);
+        flowGallery.setMaxRotation(0);
+        flowGallery.setScaleDownGravity(0.5f);
+        flowGallery.setActionDistance(FlowGallery.ACTION_DISTANCE_AUTO);
 
-        int num = Integer.MAX_VALUE / 2 % items.size();
+        int num = Integer.MAX_VALUE / 2 % flowItems.size();
         int selectPosition = Integer.MAX_VALUE / 2 - num;
 
-        mfancyCoverFlow.setSelection(selectPosition);
+        Log.d(TAG, "onCreate num:" + num + ", selectPosition:" + selectPosition);
 
-        Log.d(TAG, "onCreate num:"+num+", selectPosition:"+selectPosition);
-
-        mfancyCoverFlow.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        flowGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Item item = (Item) mfancyCoverFlow.getSelectedItem();
-                if (item != null) {
-                    Toast.makeText(MainActivity.this,item.getName(),Toast.LENGTH_SHORT).show();
+                FlowItem flowItem = (FlowItem) flowGallery.getSelectedItem();
+                if (flowItem != null) {
+                    Log.d(TAG, "flowGallery.onItemSelected "+position+":"+ flowItem.getName());
                 }
             }
 
@@ -64,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        flowGallery.setSelection(selectPosition);
     }
 
 

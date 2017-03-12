@@ -44,11 +44,11 @@ import android.view.ViewGroup;
  * This is a ViewGroup by intention to enable child views in layouts to stay interactive (like buttons) though
  * transformed.
  * <p/>
- * Since this class is only used within the FancyCoverFlowAdapter it doesn't need to check if there are multiple
+ * Since this class is only used within the FlowAdapter it doesn't need to check if there are multiple
  * children or not (there can only be one at all times).
  */
 @SuppressWarnings("ConstantConditions")
-class FancyCoverFlowItemWrapper extends ViewGroup {
+class FlowItemWrapper extends ViewGroup {
 
     // =============================================================================
     // Private members
@@ -89,17 +89,17 @@ class FancyCoverFlowItemWrapper extends ViewGroup {
     // Constructor
     // =============================================================================
 
-    public FancyCoverFlowItemWrapper(Context context) {
+    public FlowItemWrapper(Context context) {
         super(context);
         this.init();
     }
 
-    public FancyCoverFlowItemWrapper(Context context, AttributeSet attrs) {
+    public FlowItemWrapper(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.init();
     }
 
-    public FancyCoverFlowItemWrapper(Context context, AttributeSet attrs, int defStyle) {
+    public FlowItemWrapper(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.init();
     }
